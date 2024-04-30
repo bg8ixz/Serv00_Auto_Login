@@ -1,4 +1,4 @@
-name: 登录
+name: Login
 
 on:
   workflow_dispatch:
