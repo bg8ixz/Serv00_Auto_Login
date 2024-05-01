@@ -7,14 +7,16 @@ const puppeteer = require('puppeteer');
   const accounts = JSON.parse(accountsJson);
 
   for (const account of accounts) {
-    const { username, password } = account;
+    const { username, password, panelnum } = account;
 
     const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
 
+    let url = `https://panel${panelnum}.serv00.com/login/?next=/`;
+
     try {
       // 修改网址为新的登录页面
-      await page.goto('https://panel3.serv00.com/login/?next=/');
+      await page.goto(url);
 
       // 清空用户名输入框的原有值
       const usernameInput = await page.$('#id_username');
