@@ -1,18 +1,12 @@
 const fs = require('fs');
 const puppeteer = require('puppeteer');
 
-function formatDateTime(date, timeZone) {
-  // 将时间转换为yyyy-mm-dd hh:mm:ss格式
-  return date.toLocaleString('en-US', {
-    timeZone,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false
-  });
+function formatToISO(date) {
+  return date.toISOString().replace('T', ' ').replace('Z', '').replace(/\.\d{3}Z/, '');
+}
+
+async function delayTime(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 (async () => {
@@ -62,8 +56,8 @@ function formatDateTime(date, timeZone) {
 
       if (isLoggedIn) {
         // 获取当前的UTC时间和北京时间
-        const nowUtc = new Date().toISOString().replace('T', ' ').replace('Z', ''); // UTC时间
-        const nowBeijing = formatDateTime(new Date(), 'Asia/Shanghai'); // 北京时间
+        const nowUtc = formatToISO(new Date());// UTC时间
+        const nowBeijing = formatToISO(new Date(new Date().getTime() + 8 * 60 * 60 * 1000)); // 北京时间东8区，用算术来搞
         console.log(`账号 ${username} 于北京时间 ${nowBeijing}（UTC时间 ${nowUtc}）登录成功！`);
       } else {
         console.error(`账号 ${username} 登录失败，请检查账号和密码是否正确。`);
