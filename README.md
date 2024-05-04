@@ -8,11 +8,14 @@
   { "username": "heiheihei", "password": "shaibopengke", "panelnum": "3" }  
 ]
 ```
+> 其中`panelnum`参数为面板编号，即为你所收到注册邮件的`panel*.serv00.com`中的`*`数值。
 
-## 修改事项
-　　在`login.js`中记得修改第17行登录网址为你自己的，因为会有1、2、3的区别。
+## 贡献
+|姓名|主页|内容|
+| :------------: | :------------: | :------------: |
+|linzjian666|https://github.com/linzjian666|增加多面板支持|
 
-## 参考来源
+## 参考信息
 |  名称 |来源|地址|
 | :------------: | :------------: | :------------: |
 |Limkon|Github|https://github.com/Limkon|
