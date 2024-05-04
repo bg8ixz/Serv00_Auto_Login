@@ -1,6 +1,20 @@
 const fs = require('fs');
 const puppeteer = require('puppeteer');
 
+function formatDateTime(date, timeZone) {
+  // 将时间转换为yyyy-mm-dd hh:mm:ss格式
+  return date.toLocaleString('en-US', {
+    timeZone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  });
+}
+
 (async () => {
   // 读取 accounts.json 中的 JSON 字符串
   const accountsJson = fs.readFileSync('accounts.json', 'utf-8');
@@ -47,7 +61,10 @@ const puppeteer = require('puppeteer');
       });
 
       if (isLoggedIn) {
-        console.log(`账号 ${username} 登录成功！`);
+        // 获取当前的UTC时间和北京时间
+        const nowUtc = new Date().toISOString().replace('T', ' ').replace('Z', ''); // UTC时间
+        const nowBeijing = formatDateTime(new Date(), 'Asia/Shanghai'); // 北京时间
+        console.log(`账号 ${username} 于北京时间 ${nowBeijing}（UTC时间 ${nowUtc}）登录成功！`);
       } else {
         console.error(`账号 ${username} 登录失败，请检查账号和密码是否正确。`);
       }
